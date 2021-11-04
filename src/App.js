@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import sendAsync from './message-control/renderer';
 import Header from './components/Header';
-import Routes from './components/Routes';
+import Routes from './Routes';
 import { BrowserRouter as Router} from 'react-router-dom';
 import './App.css';
 
@@ -14,34 +14,9 @@ function App() {
     }
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <h1>
-                    Standalone application with Electron, React, and
-                    SQLite stack.
-                </h1>
-            </header>
-            <article>
-                <p>
-                    Say <i>ping</i> to the main process.
-                </p>
-                <input
-                    type="text"
-                    value={message}
-                    onChange={({ target: { value } }) => setMessage(value)}
-                />
-                <button type="button" onClick={() => send(message)}>
-                    Send
-                </button>
-                <br />
-                <p>Main process responses:</p>
-                <br />
-                <pre>
-                    {(response && JSON.stringify(response, null, 2)) ||
-                        'No query results yet!'}
-                </pre>
-            </article>
-        </div>
+        <Router>
+            <Routes />
+            </Router>
     );
 }
 

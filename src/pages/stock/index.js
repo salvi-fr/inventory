@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import sendAsync from '../message-control/renderer';
-import {UserHeader} from '../components/Header';
+import sendAsync from '../../message-control/renderer';
+import Header from '../../components/Header';
 
 
 
@@ -15,10 +15,9 @@ const  Stock =()=> {
 
     return (
         <>
-        
+        <Header role="Admin"/>
         <div className="App">
-        <UserHeader />
-            <p>not yet </p>
+            
             <header className="App-header">
                 <h1>
                     Standalone application with Electron, React, and
