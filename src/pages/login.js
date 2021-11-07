@@ -3,7 +3,7 @@ import sendAsync from '../message-control/renderer';
 import {UserHeader} from '../components/Header';
 
 import {Form, FormGroup, FormControl, FormLabel, Button} from 'react-bootstrap';
-
+import Login from "../components/login"
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 // import {addNewEmp} from '../allactions';
@@ -82,7 +82,7 @@ const handleSubmit=()=>{
         );
    }
 
-   export default  Signup
+   export default  Login
 // function mapDispatchToProps(dispatch){
 //     return bindActionCreators({addNewEmp},dispatch)
 // }

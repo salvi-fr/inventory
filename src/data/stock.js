@@ -1,0 +1,59 @@
+export const stockInData =[
+    {
+        name:"Ikibiriti",
+        code:"sdssdfsds",
+        quantity:3,
+        type:"Donation",
+        price:34343,
+        expiryDate:"20/05/2021",
+        manufactureDate:"20/05/2020",
+    },
+    {
+        name:"Ikibiriti",
+        code:"sdssdfsds",
+        quantity:3,
+        type:"putchosed",
+        price:34343,
+        expiryDate:"20/05/2021",
+        manufactureDate:"20/05/2020",
+    },
+    {
+        name:"Ikibiriti",
+        code:"sdssdfsds",
+        quantity:3,
+        type:"Donation",
+        price:34343,
+        expiryDate:"20/05/2021",
+        manufactureDate:"20/05/2020",
+    }
+]
+
+export const stockOutData=[
+    {
+        name:"Ikibiriti",
+        code:"sdssdfsds",
+        quantity:3,
+        type:"putchosed",
+        price:34343,
+        expiryDate:"20/05/2021",
+        manufactureDate:"20/05/2020",
+    },
+    {
+        name:"Ikibiriti",
+        code:"sdssdfsds",
+        quantity:3,
+        type:"Donation",
+        price:34343,
+        expiryDate:"20/05/2021",
+        manufactureDate:"20/05/2020",
+    },
+    {
+        name:"Ikibiriti",
+        code:"sdssdfsds",
+        quantity:3,
+        type:"putchosed",
+        price:34343,
+        expiryDate:"20/05/2021",
+        manufactureDate:"20/05/2020",
+    }
+]

@@ -10,7 +10,8 @@ import WelcomePage from './pages/welcome';
 const  RoutesComponents=()=> {
        return ( 
            <Switch>
-               <Route path={'/'} exact component={WelcomePage } ></Route>
+               {/* <Route exact path="/" component={StockPage}/> */}
+               <Route exact path={'/'} exact component={WelcomePage } ></Route>
                <Route path={'/signup'} exact component={SignupPage } ></Route>
                <Route path={'/login'} exact component={LoginPage} ></Route>
                <Route path={'/stock'} exact component={StockPage}></Route>
