@@ -3,9 +3,9 @@ import { toast } from 'react-toastify';
 
 
 let schema = {
-  email: Joi.string().required().label('Email'),
+  username: Joi.string().required().label('username'),
   // username: Joi.string().required().label('Username'),
-  password: Joi.string().required().label('Password'),
+  password: Joi.string().required().label('password'),
 };
 
 // if (schema.email || schema.username) {

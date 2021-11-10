@@ -7,8 +7,8 @@ import commonStyle from '../common/common.scss';
 import TextInput from '../common/textInput';
 import SubmitButton from '../common/submitButton';
 import OrLine from '../common/orLine';
-import { signupAction } from '../../redux/actions/signup/signupAction';
-import SwitchToSignupOrLogin from '../common/switchToSignupOrLogin';
+import * as  userActions from '../../redux/actions/user';
+// import SwitchToSignupOrLogin from '../common/switchToSignupOrLogin';
 // import loginSvgPath from '../../../public/assets/images/loginSvg.svg';
 // import SocialButtons from '../SocialButtons/SocialButton';
 
@@ -40,7 +40,7 @@ export class Signup extends Component {
     const isValid = Object.keys(errors).length === 0;
     if (isValid) {
       this.setState({ loading: true });
-      props.signupAction(this.state).then((res) => {
+      props.userActions(this.state).then((res) => {
         if (res.payload.status === 201) {
           const { history, message } = this.props;
           this.setState(
@@ -142,7 +142,7 @@ export class Signup extends Component {
 }
 
 Signup.propTypes = {
-  signupAction: PropTypes.func.isRequired,
+  userActions: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   message: PropTypes.string,
 };
@@ -152,4 +152,4 @@ Signup.defaultProps = {
 const mapStateToProps = ({ userRegistrationData: { message, status } }) => ({
   message, status,
 });
-export default connect(mapStateToProps, { signupAction })(Signup);
+export default connect(mapStateToProps, { userActions })(Signup);

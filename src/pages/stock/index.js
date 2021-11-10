@@ -4,9 +4,11 @@ import {UserHeader} from '../../components/Header';
 import {stockInData,stockOutData} from '../../data/stock';
 
 import {Form,Nav,CardGroup,Row,Card,Table,NavLink,Col, FormGroup, FormControl, FormLabel, Button} from 'react-bootstrap';
+
 const options =[{name:"purchosed",id:1},{name:"donated",id:2}];
 // eslint-disable-next-line no-undef
 const  Stock =()=> {
+
     const [message, setMessage] = useState('SELECT * FROM repositories');
     const [response, setResponse] = useState();
     const[stockIn, setStockIn] = useState(false);

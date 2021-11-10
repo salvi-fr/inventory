@@ -3,20 +3,20 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { bindActionCreators } from 'redux';
 import classnames from 'classnames';
+import sendAsync from '../../message-control/renderer';
 import commonStyle from '../common/common.scss';
 import TextInput from '../common/textInput';
 import SubmitButton from '../common/submitButton';
 import OrLine from '../common/orLine';
-// import SwitchToSignupOrLogin from '../common/switchToSignupOrLogin';
-// import loginAction from '../../redux/actions/login';
+import * as  userActions from '../../redux/actions/user';
 import loginValidation from './loginValidation';
-// import signupSvgPath from '../../../public/assets/images/signupSvg.svg';
-// import SocialButtons from '../SocialButtons/SocialButton';
+
 
 const Login =(props)=> {
 const [state, setState]= useState ({
-    email: '',
+    username: '',
     password: '',
     error: '',
     loading: false,
@@ -32,22 +32,17 @@ const [state, setState]= useState ({
       }
     })
   }
-// useEffect
-//   UNSAFE_componentWillReceiveProps(nextProps) {
-//     setState((prevState) => ({ ...prevState, error: nextProps.message }));
-//   }
+  useEffect (()=>{
+  console.log('props in useaffect',props)
+  },[props])
 
   const onSubmit = (event) => {
+    console.log('onSubmit',state);
     event.preventDefault();
-    const re = /[A-Z0-9]+@[A-Z0-9-]+\.[A-Z]{2,4}/gim;
-    const {email, password } = state;
-    const isEmail = re.test(email);
-  
-    if (!isEmail) {
-      
-    } 
-    const checkErrors = loginValidation(state);
+    const {username, password } = state;
+    const checkErrors = loginValidation({username,password});
     if (checkErrors) {
+      console.log("error found",checkErrors.details)
       const errors = {};
       (checkErrors.details || []).forEach((err) => {
         errors[err.path[0]] = err.message.replace(/"/g, '');
@@ -57,44 +52,34 @@ const [state, setState]= useState ({
       return false;
     }
     setState((prevState) => ({ ...prevState, loading: true }));
+   console.log("about to create a querry")
+      sendAsync(`Select * from USER where Username="${username}" AND password ="${password}"`).then((result) => {
+      setState((prevState) => ({ ...prevState, loading: false }))
+      console.log('res',result)});
+      console.log(props.userActions)
+      props.loginAction({username,password})
   
-    // props.loginAction(formData).then((res) => {
-    //   if (res.payload.status !== 200) {
-    //     setState({
-    //       loading: false,
-    //     });
-    //   }
-    // });
     return setState({
       error: '',
     });
   };
-
-  const onChange = ({ target }) => {
-    // setState((prevState) => ({ ...prevState, error: '' }));
-    // const input = { [target.name]: target.value };
-    // setState((prevState) => ({ ...prevState, ...input }));
-  };
-
-
     const {
-      email, password, error, loading,
+      username, password, error, loading,
     } = state;
-    const { location, message, status } = props;
-    // if (status === 200) {
-    //   return (
-    //     <Redirect
-    //       to={
-    //         location.state
-    //           ? { pathname: location.state.from.pathname }
-    //           : {
-    //             pathname: '/',
-    //             state: { message },
-    //           }
-    //       }
-    //     />
-    //   );
-    // }
+    const { location, isLoggedIn} = props;
+    if (isLoggedIn) {
+      return (
+        <Redirect
+          to={
+            location.state
+              ? { pathname: location.state.from.pathname }
+              : {
+                pathname: '/',
+              }
+          }
+        />
+      );
+    }
     return (
       <div className="container registration" style={commonStyle}>
         {/* <ToastContainer position={toast.POSITION.TOP_RIGHT} /> */}
@@ -107,10 +92,10 @@ const [state, setState]= useState ({
                 onSubmit={onSubmit}
               >
                 <TextInput
-                  type="email"
+                  type="text"
                   label="Username"
-                  name="email"
-                  value={email}
+                  name="username"
+                  value={username}
                   onChange={handleChange}
                   error={error}
                 />
@@ -142,24 +127,32 @@ const [state, setState]= useState ({
       </div>
     );
   }
-  export default Login;
-// }
-// Login.propTypes = {
-//   loginAction: PropTypes.func,
-//   status: PropTypes.number,
-//   message: PropTypes.string,
-// };
-// Login.defaultProps = {
-//   status: 0,
-//   message: '',
-//   loginAction: () => {},
-// };
-// export const mapStateToProps = ({ user: { message, status, token } }) => ({
-//   message,
-//   status,
-//   token,
-// });
-// export default connect(
-//   mapStateToProps,
-//   { loginAction },
-// )(Login);
+
+
+Login.propTypes = {
+  loginAction: PropTypes.func.isRequired,
+  isLoggedIn:PropTypes.bool, 
+  profile:PropTypes.object,
+  authError:PropTypes.object,
+};
+Login.defaultProps = {
+  isLoggedIn:false,
+  authError:null, 
+  profile:{},
+  userActions: () => {},
+};
+export const mapStateToProps = ({ auth
+  :{ isLoggedIn,loading, profile,authError} 
+}) => ({
+  isLoggedIn,
+  authError,
+  loading,
+  profile,
+});
+export const mapDispatchToProps = (dispatch) => ({
+    loginAction: bindActionCreators(userActions.login, dispatch),
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './navbar.scss';
 import { connect } from 'react-redux';
@@ -6,10 +6,9 @@ import { bindActionCreators } from 'redux';
 import {
   Nav, NavDropdown, Navbar, Image, Container,
 } from 'react-bootstrap';
-import * as profileActions from '../../../redux/actions/profile/fetchProfile';
-import Search from '../search/search';
-// import Logo from '../logo';
-import { updateNotificationsStatus, getNotifications } from '../../../redux/actions/notifications/index';
+import * as profileActions from '../../../redux/actions/user';
+
+
 
 
 /**
@@ -20,43 +19,23 @@ import { updateNotificationsStatus, getNotifications } from '../../../redux/acti
  * @extends {React.Component}
  */
 
-export class NavBar extends Component {
-  /**
-   * @method componentDidMount
-   * @returns {boolean} changed state
-   */
-   state = {
-     notifications: {
-       data: [],
-       message: '',
-       status: '',
-     },
-   }
+export const  NavBar=(props)=> {
 
-   async componentDidMount() {
-     if (!localStorage.getItem('token')) return;
-    //  await this.props.actions.fetchProfile();
+useEffect(() => {
+  // if (!localStorage.getItem('token')) return;
+  console.log("actions",props.actions.fetchProfile)
+  props.actions.fetchProfile();
     //  this.intervalId = setInterval(() => this.props.actions.getNotifications(), 1000);
-   }
-
-   componentWillReceiveProps(nextProps) {
-     const {
-       notifications,
-     } = this.props;
-    //  if (nextProps.notifications !== notifications && nextProps.notifications.status === 'success') {
-    //    this.setState({ notifications: nextProps.notifications });
-    //  }
-   }
-
-   handleNotifications = (id, articleSlug) => {
-     this.props.actions.updateNotificationsStatus(id, articleSlug);
-   }
-
-   render() {
-     const { user } = this.props;
-     const { isLoggedIn, profile } = user;
-     const { notifications: { data } } = this.state;
-     const no_of_unread = (data.length !== 0 ? (data.filter((s) => s.read === false).length) : 0);
+},[])
+useEffect(() => {
+ //  if (nextProps.notifications !== notifications && nextProps.notifications.status === 'success') {
+ //    this.setState({ notifications: nextProps.notifications });
+ //  }
+},[props])
+     const { auth } = props;
+     const isLoggedIn=false;
+     const profile ={}
+    //  const { isLoggedIn, profile } = auth;
 
      return (
        <>
@@ -85,14 +64,14 @@ export class NavBar extends Component {
                            <div>
                              <i className="far fa-bell" />
 
-                             {no_of_unread !== 0 ? <span className="badge badge-danger dropdown-toggle">{no_of_unread}</span> : ''}
+                             {1 !== 0 ? <span className="badge badge-danger dropdown-toggle">1</span> : ''}
                            </div>
                     )}
                          id="collasible-nav-dropdown"
                        >
                          {' '}
 
-                         { data.length !== 0 ? (data.map((notification) => (
+                         {/* { data.length !== 0 ? (data.map((notification) => (
                            <p onClick={() => this.handleNotifications(notification.id, notification.articleSlug)} style={{ cursor: 'pointer' }}>
                              <NavDropdown.Item style={{ fontSize: '10px' }}>
                                {notification.read === false
@@ -103,7 +82,7 @@ export class NavBar extends Component {
                            <NavDropdown.Item>
                         No notifications yet!
                            </NavDropdown.Item>
-                         )}
+                         )} */}
                        </NavDropdown>
                      </Nav.Link>
                      <NavDropdown
@@ -145,10 +124,10 @@ export class NavBar extends Component {
                      <Nav.Link href="/stock">
                     Stock
                      </Nav.Link>
-                     <Nav.Link href="/return">
+                     <Nav.Link href="/returns">
                     Return 
                      </Nav.Link>
-                     <Nav.Link href="/report">
+                     <Nav.Link href="/reports">
                     Report 
                      </Nav.Link>
                      <Nav.Link href="/settings">
@@ -168,25 +147,21 @@ export class NavBar extends Component {
        </>
      );
    }
-}
 NavBar.defaultProps = {
-  user: {},
+  auth: null,
 };
 NavBar.propTypes = {
-  user: PropTypes.object,
+  auth: PropTypes.object,
   actions: PropTypes.object.isRequired,
 };
-export const mapStateToProps = ({ user, notifications }) => (
+export const mapStateToProps = ({ auth }) => (
   {
-    user,
-    notifications,
+   auth,
   }
 );
 export const mapDispatchToProps = (dispatch) => ({
   actions: {
     fetchProfile: bindActionCreators(profileActions.fetchProfile, dispatch),
-    getNotifications: bindActionCreators(getNotifications, dispatch),
-    updateNotificationsStatus: bindActionCreators(updateNotificationsStatus, dispatch),
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

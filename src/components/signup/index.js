@@ -7,8 +7,8 @@ import commonStyle from '../common/common.scss';
 import TextInput from '../common/textInput';
 import SubmitButton from '../common/submitButton';
 import OrLine from '../common/orLine';
-import { signupAction } from '../../redux/actions/signup/signupAction';
-import SwitchToSignupOrLogin from '../common/switchToSignupOrLogin';
+import * as signupAction  from '../../redux/actions/user';
+// import SwitchToSignupOrLogin from '../common/switchToSignupOrLogin';
 // import loginSvgPath from '../../../public/assets/images/loginSvg.svg';
 // import SocialButtons from '../SocialButtons/SocialButton';
 

@@ -5,6 +5,8 @@ import StockPage from './pages/stock';
 import SignupPage from './pages/signup';
 import LoginPage from './pages/login';
 import WelcomePage from './pages/welcome';
+import SettingPage from './pages/settings';
+import ReportPage from './pages/reports';
 
 // eslint-disable-next-line no-undef
 const  RoutesComponents=()=> {
@@ -15,6 +17,8 @@ const  RoutesComponents=()=> {
                <Route path={'/signup'} exact component={SignupPage } ></Route>
                <Route path={'/login'} exact component={LoginPage} ></Route>
                <Route path={'/stock'} exact component={StockPage}></Route>
+               <Route path={'/settings'} exact component={SettingPage}></Route>
+               <Route path={'/reports'} exact component={ReportPage}></Route>
            </Switch>
        );
    }

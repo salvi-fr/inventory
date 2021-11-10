@@ -16,6 +16,7 @@ function createWindow() {
         height: 680,
         webPreferences: {
             nodeIntegration: true,
+            enableRemoteModule: true
         },
     });
     mainWindow.loadURL(
